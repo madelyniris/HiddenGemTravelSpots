@@ -1,12 +1,78 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<html xmlns:th="http://www.thymeleaf.org/">
 
+
+<html lang="en">
 <head th:replace="fragments :: head">
 </head>
 <body>
 <header th:fragment="header"> </header>
 
-<div> <title>Add Gem: </title> </div>
+<div><title> Submit a New Hidden Gem </title> </div>
+<br><br><br>
+<form action="/upload" method="POST" enctype="multipart/form-data">
+    <div class="form-group">
+        <label th:for="gemName">Gem Name</label>
+            <input class="form-control" th:field="${gem.name}" />
+        <span th:errors="${gem.name}" class="error"> </span>
+    </div>
+
+    <div class="form-group">
+        <label th:for="location">Location</label>
+            <input class="form-control" th:field="${gem.location}" />
+        <span th:errors="${gem.location}: class="error></span>
+    </div>
+    <div class="form-group">
+        <input type="radio" id="address" name="location" value="address">
+        <label for="address">Address</label><br>
+        <input type="radio" id="coordinates" name="location" value="coordinates">
+        <label for="coordinates">Coordinates</label><br>
+        <input type="radio" id="currentLocation" name="location" value="currentLocation">
+        <label for="currentLocation">Current Location</label>
+    </div>
+
+
+    <!-- NEED TO FIGURE OUT HOW TO CHANGE INPUTS BASED ON USER CHOICE -->
+
+    <div class="form-group">
+        <label th:for="gemDescription">Description</label>
+        <input class="form-control" th:field="${gem.description}" />
+        <textarea id="subject" name="subject" placeholder="Enter description here..." style="height:200px"></textarea>
+        <span th:errors="${gem.description}" class="error"> </span>
+    </div>
+
+    <div class="form-group">
+        <input type="radio" id="oneDollar" name="price" value="oneDollar">
+        <label for="oneDollar">$</label><br>
+        <input type="radio" id="twoDollar" name="price" value="twoDollar">
+        <label for="twoDollar">$$</label><br>
+        <input type="radio" id="threeDollar" name="price" value="threeDollar">
+        <label for="threeDollar">$$$</label>
+        <input type="radio" id="fourDollar" name="price" value="fourDollar">
+        <label for="fourDollar">$$$$</label>
+        <input type="radio" id="fiveDollar" name="price" value="fiveDollar">
+        <label for="fiveDollar">$$$$$</label>
+    </div>
+
+    <div class="form-group">
+        <label th:for="tags">Tags</label>
+        <th:block th:each="tag : ${tags}">
+            <input type="checkbox" name="tags" th:value="${tag.id}">
+            <label th:text="${tag.name}"></label>
+        </th:block>
+        <a th:href="@{'/tag.add'}">Add Tag</a>
+    </div>
+
+    <!-- ENTER MAP HERE -->
+
+    <input type="file" id="gemImage" name="fileToUpload" value="gemImage">
+    <label for="gemImage">Upload Photo of Gem</label>
+
+    <input type="submit" value="Add Gem" />
+</form>
+
+
+
 
 <footer th:replace="fragments :: footer"></footer>
 </body>
